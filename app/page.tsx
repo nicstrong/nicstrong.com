@@ -2,12 +2,9 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { SocialLinks } from '@/components/SocialLinks'
-import { RepoCard } from '@/components/RepoCard'
-import { usePinnedRepos } from '@/hooks/usePinnedRepos'
+import { Projects } from '@/components/Projects'
 
 export default function Home() {
-  const { data: projects, isLoading, error } = usePinnedRepos()
-
   return (
     <main className='min-h-screen bg-background text-foreground p-8 mx-auto max-w-4xl'>
       <section className='flex flex-col items-center text-center'>
@@ -37,32 +34,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Projects */}
-      <section className='mt-12 mb-12'>
-        <h2 className='text-2xl font-semibold mb-4'>My Github Projects</h2>
-        {isLoading && (
-          <div className='text-center text-muted-foreground'>
-            Loading projects...
-          </div>
-        )}
-        {error && (
-          <div className='text-center text-red-500'>
-            Failed to load projects. Please try again later.
-          </div>
-        )}
-        {projects && projects.length > 0 && (
-          <div className='grid gap-6 md:grid-cols-2'>
-            {projects.map((project) => (
-              <RepoCard key={project.name} project={project} />
-            ))}
-          </div>
-        )}
-        {projects && projects.length === 0 && (
-          <div className='text-center text-muted-foreground'>
-            No pinned projects found.
-          </div>
-        )}
-      </section>
+      <Projects />
 
       {/* Footer */}
       <section className='text-center text-muted-foreground'>

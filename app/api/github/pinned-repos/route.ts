@@ -1,3 +1,4 @@
+import { writeCache } from '@/lib/cache'
 import { NextResponse } from 'next/server'
 
 interface PinnedRepo {
@@ -80,6 +81,8 @@ export async function GET() {
       url: repo.url,
       topics: repo.repositoryTopics.nodes.map((node: any) => node.topic.name),
     }))
+
+    writeCache(pinnedRepos) // Save to local copy
 
     return NextResponse.json(pinnedRepos)
   } catch (error) {
