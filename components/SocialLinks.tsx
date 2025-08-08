@@ -1,12 +1,30 @@
 import { FC } from 'react'
 import { Button } from '@/components/ui/button'
-import { Github, Linkedin, Twitter } from 'lucide-react'
+import { Github, Icon, Linkedin, X } from 'lucide-react'
+import Link from 'next/link'
 
 interface SocialLinksProps {
   github: string
   linkedin: string
   twitter: string
 }
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/nicstrong',
+    icon: Github,
+  },
+  {
+    name: 'X',
+    url: 'https://X.com/nicstrong',
+    icon: X,
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/nicstrong',
+    icon: Linkedin,
+  },
+]
 
 export const SocialLinks: FC<SocialLinksProps> = ({
   github,
@@ -14,22 +32,18 @@ export const SocialLinks: FC<SocialLinksProps> = ({
   twitter,
 }) => {
   return (
-    <div className='flex gap-4 mt-4'>
-      <Button variant='outline' asChild>
-        <a href={github} target='_blank' rel='noopener noreferrer'>
-          <Github className='mr-2 h-4 w-4' /> GitHub
-        </a>
-      </Button>
-      <Button variant='outline' asChild>
-        <a href={linkedin} target='_blank' rel='noopener noreferrer'>
-          <Linkedin className='mr-2 h-4 w-4' /> LinkedIn
-        </a>
-      </Button>
-      <Button variant='outline' asChild>
-        <a href={twitter} target='_blank' rel='noopener noreferrer'>
-          <Twitter className='mr-2 h-4 w-4' /> Twitter
-        </a>
-      </Button>
+    <div className='flex justify-center gap-4 mb-8'>
+      {socialLinks.map((link) => {
+        const Icon = link.icon
+        return (
+          <Button key={link.name} variant='outline' size='icon' asChild>
+            <Link href={link.url} target='_blank' rel='noopener noreferrer'>
+              <Icon className='h-4 w-4' />
+              <span className='sr-only'>{link.name}</span>
+            </Link>
+          </Button>
+        )
+      })}
     </div>
   )
 }
