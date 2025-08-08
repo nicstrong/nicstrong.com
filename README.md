@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## GitHub Integration
+
+This project fetches pinned repositories from GitHub to display them on the homepage. To enable this feature:
+
+1. Create a GitHub personal access token at [https://github.com/settings/tokens](https://github.com/settings/tokens)
+2. Add the token to your environment variables:
+   ```bash
+   # Create a .env.local file in the root directory
+   GITHUB_TOKEN=your_github_token_here
+   ```
+
+The token requires the `public_repo` scope for public repositories.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

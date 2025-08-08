@@ -1,9 +1,13 @@
+'use client'
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { SocialLinks } from '@/components/SocialLinks'
 import { RepoCard } from '@/components/RepoCard'
-import { projects } from './constants'
+import { usePinnedRepos } from '@/hooks/usePinnedRepos'
 
 export default function Home() {
+  const { data: projects, isLoading, error } = usePinnedRepos()
+
   return (
     <main className='min-h-screen bg-background text-foreground p-8 mx-auto max-w-4xl'>
       <section className='flex flex-col items-center text-center'>
@@ -26,9 +30,9 @@ export default function Home() {
       <section className='mt-10 mx-auto'>
         <h2 className='text-2xl font-semibold'>About me</h2>
         <p className='text-muted-foreground mt-2'>
-          I’m a full‑stack engineer who loves turning ideas into polished,
+          I'm a full‑stack engineer who loves turning ideas into polished,
           user‑friendly products. I enjoy working across the stack—from crafting
-          accessible UIs to designing robust APIs—and I’m always exploring new
+          accessible UIs to designing robust APIs—and I'm always exploring new
           tools, patterns, and ways to ship high‑quality software.
         </p>
       </section>
@@ -36,11 +40,28 @@ export default function Home() {
       {/* Projects */}
       <section className='mt-12 mb-12'>
         <h2 className='text-2xl font-semibold mb-4'>My Github Projects</h2>
-        <div className='grid gap-6 md:grid-cols-2'>
-          {projects.map((project) => (
-            <RepoCard key={project.name} project={project} />
-          ))}
-        </div>
+        {isLoading && (
+          <div className='text-center text-muted-foreground'>
+            Loading projects...
+          </div>
+        )}
+        {error && (
+          <div className='text-center text-red-500'>
+            Failed to load projects. Please try again later.
+          </div>
+        )}
+        {projects && projects.length > 0 && (
+          <div className='grid gap-6 md:grid-cols-2'>
+            {projects.map((project) => (
+              <RepoCard key={project.name} project={project} />
+            ))}
+          </div>
+        )}
+        {projects && projects.length === 0 && (
+          <div className='text-center text-muted-foreground'>
+            No pinned projects found.
+          </div>
+        )}
       </section>
 
       {/* Footer */}
