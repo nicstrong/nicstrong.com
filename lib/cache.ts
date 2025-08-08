@@ -1,24 +1,18 @@
-import fs from 'fs'
-import path from 'path'
+import { kv } from '@vercel/kv'
 
-const CACHE_PATH = path.join(process.cwd(), 'cache.json')
-
-export function readCache<T>(): T | null {
+export async function readCache<T>(key: string): Promise<T | null> {
   try {
-    if (fs.existsSync(CACHE_PATH)) {
-      const data = fs.readFileSync(CACHE_PATH, 'utf-8')
-      return JSON.parse(data) as T
-    }
-    return null
+    const data = await kv.get(key)
+    return data as T
   } catch (err) {
     console.error('Error reading cache:', err)
     return null
   }
 }
 
-export function writeCache<T>(data: T) {
+export async function writeCache<T>(data: T, key: string) {
   try {
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2), 'utf-8')
+    await kv.set(key, data)
   } catch (err) {
     console.error('Error writing cache:', err)
   }

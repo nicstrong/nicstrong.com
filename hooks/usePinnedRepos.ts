@@ -9,10 +9,15 @@ async function fetchPinnedRepos(): Promise<Project[]> {
   return response.json()
 }
 
-export function usePinnedRepos() {
+export function usePinnedRepos(initialData?: Project[]) {
   return useQuery({
     queryKey: ['pinned-repos'],
     queryFn: fetchPinnedRepos,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 15 * 60 * 1000,
+    initialData,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: false,
   })
 }
