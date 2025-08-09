@@ -12,7 +12,7 @@ export default function Home() {
         </Avatar>
         <h1 className='text-4xl font-bold mt-4'>Nic Strong</h1>
         <p className='text-muted-foreground max-w-xl mt-2 mb-4'>
-          Full Stack Developer & Open Source Enthusiast.
+          Software Developer & Lifelong Learner.
         </p>
         <SocialLinks />
       </section>
@@ -20,10 +20,13 @@ export default function Home() {
       <section className='mt-10 mx-auto'>
         <h2 className='text-2xl font-semibold'>About me</h2>
         <p className='text-muted-foreground mt-2'>
-          I&aposm a full‑stack engineer who loves turning ideas into polished,
-          user‑friendly products. I enjoy working across the stack—from crafting
-          accessible UIs to designing robust APIs—and I&aposm always exploring
-          new tools, patterns, and ways to ship high‑quality software.
+          I’m a software developer with over three decades of professional
+          experience, building solutions since 1994. Over the years, I’ve worked
+          extensively with C, C++, Java, C#, Kotlin, and TypeScript across
+          diverse domains including telephony, finance, mobile, and unified
+          communications. I love exploring open source projects and often use
+          them as a way to explore new and exciting technologies. These days, my
+          focus is on the rapidly evolving world of AI.
         </p>
       </section>
 
