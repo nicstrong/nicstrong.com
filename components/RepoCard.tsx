@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-import { PinnedRepo } from '@/app/types'
+import { PinnedRepo } from '@/lib/types'
 import { ExternalLink, GitFork, Star } from 'lucide-react'
 import Link from 'next/link'
 

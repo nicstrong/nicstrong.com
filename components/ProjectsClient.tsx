@@ -1,6 +1,6 @@
 'use client'
 
-import { PinnedRepo } from '@/app/types'
+import { PinnedRepo } from '@/lib/types'
 import { RepoCard } from '@/components/RepoCard'
 import { usePinnedRepos } from '@/hooks/usePinnedRepos'
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function ProjectsClient({ initialProjects }: Props) {
-  const { data: projects = initialProjects, error } = usePinnedRepos()
+  const { data: projects, error } = usePinnedRepos(initialProjects)
 
   return (
     <section className='mt-12 mb-12'>

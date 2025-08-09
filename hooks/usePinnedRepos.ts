@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { PinnedRepo } from '@/app/types'
+import { PinnedRepo } from '@/lib/types'
 
 async function fetchPinnedRepos(): Promise<PinnedRepo[]> {
   const response = await fetch('/api/github/pinned-repos')

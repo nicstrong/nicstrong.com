@@ -1,9 +1,8 @@
-import { GitHubUser, GraphQLResponse, PinnedRepo } from '@/app/types'
+import { GitHubUser, GraphQLResponse, PinnedRepo } from '@/lib/types'
 import { writeCache, readCache } from '@/lib/cache'
+import { PINNED_REPOS_CACHE_KEY } from '@/lib/constants'
 import { checkRateLimit, updateRateLimit } from '@/lib/rateLimit'
 import { NextResponse } from 'next/server'
-
-const PINNED_REPOS_CACHE_KEY = 'api-cache:github-pinned-repos'
 
 export async function GET() {
   try {
@@ -149,7 +148,7 @@ export async function GET() {
     console.error('Error fetching pinned repos:', error)
 
     // Return cached data on error if available
-    const cachedData = await readCache<PinnedRepo[]>('pinned-repos')
+    const cachedData = await readCache<PinnedRepo[]>(PINNED_REPOS_CACHE_KEY)
     if (cachedData) {
       return NextResponse.json(cachedData)
     }
