@@ -1,11 +1,11 @@
 import { readCache } from '@/lib/cache'
-import { Project } from '@/app/types'
+import { PinnedRepo } from '@/app/types'
 import { ProjectsClient } from './ProjectsClient'
 
 // Server-side function to get initial data
-async function getInitialProjects(): Promise<Project[]> {
+async function getInitialProjects(): Promise<PinnedRepo[]> {
   // Try to read from cache first for immediate response
-  const cachedData = await readCache<Project[]>('pinned-repos')
+  const cachedData = await readCache<PinnedRepo[]>('pinned-repos')
   if (cachedData) {
     return cachedData
   }

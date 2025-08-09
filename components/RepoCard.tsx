@@ -8,12 +8,12 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-import { Project } from '@/app/types'
+import { PinnedRepo } from '@/app/types'
 import { ExternalLink, GitFork, Star } from 'lucide-react'
 import Link from 'next/link'
 
 interface RepoCardProps {
-  project: Project
+  project: PinnedRepo
 }
 
 export const RepoCard: FC<RepoCardProps> = ({ project }) => {

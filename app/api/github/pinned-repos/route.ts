@@ -1,16 +1,7 @@
+import { GitHubUser, GraphQLResponse, PinnedRepo } from '@/app/types'
 import { writeCache, readCache } from '@/lib/cache'
 import { checkRateLimit, updateRateLimit } from '@/lib/rateLimit'
 import { NextResponse } from 'next/server'
-
-interface PinnedRepo {
-  name: string
-  description: string
-  stars: number
-  forks: number
-  language: string
-  url: string
-  topics: string[]
-}
 
 const PINNED_REPOS_CACHE_KEY = 'api-cache:github-pinned-repos'
 
@@ -128,20 +119,20 @@ export async function GET() {
       throw new Error(`GitHub API error: ${response.status}`)
     }
 
-    const data = await response.json()
+    const result = (await response.json()) as GraphQLResponse<GitHubUser>
 
-    if (data.errors) {
-      throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`)
+    if (result.errors) {
+      throw new Error(`GraphQL errors: ${JSON.stringify(result.errors)}`)
     }
 
-    const pinnedRepos = data.data.user.pinnedItems.nodes.map((repo: any) => ({
+    const pinnedRepos = result.data.user.pinnedItems.nodes.map((repo) => ({
       name: repo.name,
       description: repo.description || 'No description available',
       stars: repo.stargazerCount,
       forks: repo.forkCount,
       language: repo.primaryLanguage?.name || 'Unknown',
       url: repo.url,
-      topics: repo.repositoryTopics.nodes.map((node: any) => node.topic.name),
+      topics: repo.repositoryTopics.nodes.map((node) => node.topic.name),
     }))
 
     await writeCache(pinnedRepos, PINNED_REPOS_CACHE_KEY)

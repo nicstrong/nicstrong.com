@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { Project } from '@/app/types'
+import { PinnedRepo } from '@/app/types'
 
-async function fetchPinnedRepos(): Promise<Project[]> {
+async function fetchPinnedRepos(): Promise<PinnedRepo[]> {
   const response = await fetch('/api/github/pinned-repos')
   if (!response.ok) {
     throw new Error('Failed to fetch pinned repositories')
@@ -9,7 +9,7 @@ async function fetchPinnedRepos(): Promise<Project[]> {
   return response.json()
 }
 
-export function usePinnedRepos(initialData?: Project[]) {
+export function usePinnedRepos(initialData?: PinnedRepo[]) {
   return useQuery({
     queryKey: ['pinned-repos'],
     queryFn: fetchPinnedRepos,

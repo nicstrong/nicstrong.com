@@ -1,19 +1,15 @@
 'use client'
 
-import { Project } from '@/app/types'
+import { PinnedRepo } from '@/app/types'
 import { RepoCard } from '@/components/RepoCard'
 import { usePinnedRepos } from '@/hooks/usePinnedRepos'
 
 interface Props {
-  initialProjects: Project[]
+  initialProjects: PinnedRepo[]
 }
 
 export function ProjectsClient({ initialProjects }: Props) {
-  const {
-    data: projects = initialProjects,
-    isLoading,
-    error,
-  } = usePinnedRepos()
+  const { data: projects = initialProjects, error } = usePinnedRepos()
 
   return (
     <section className='mt-12 mb-12'>

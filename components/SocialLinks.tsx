@@ -1,13 +1,8 @@
 import { FC } from 'react'
 import { Button } from '@/components/ui/button'
-import { Github, Icon, Linkedin, X } from 'lucide-react'
+import { Github, Linkedin, X } from 'lucide-react'
 import Link from 'next/link'
 
-interface SocialLinksProps {
-  github: string
-  linkedin: string
-  twitter: string
-}
 const socialLinks = [
   {
     name: 'GitHub',
@@ -26,11 +21,7 @@ const socialLinks = [
   },
 ]
 
-export const SocialLinks: FC<SocialLinksProps> = ({
-  github,
-  linkedin,
-  twitter,
-}) => {
+export const SocialLinks: FC = () => {
   return (
     <div className='flex justify-center gap-4 mb-8'>
       {socialLinks.map((link) => {
