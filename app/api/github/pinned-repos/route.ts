@@ -3,16 +3,14 @@ import { writeCache, readCache } from '@/lib/cache'
 import { PINNED_REPOS_CACHE_KEY } from '@/lib/constants'
 import { checkRateLimit, updateRateLimit } from '@/lib/rateLimit'
 import { NextResponse } from 'next/server'
+import * as Sentry from '@sentry/nextjs'
+
+const { logger } = Sentry
 
 export async function GET() {
   try {
-    console.log('[GET] /api/github/pinned-repos - started')
     // Check server-side rate limit first
     const rateLimitCheck = await checkRateLimit()
-    console.log(
-      '[GET] /api/github/pinned-repos - rateLimitCheck',
-      rateLimitCheck,
-    )
 
     if (!rateLimitCheck.allowed) {
       // Update rate limit to track this attempt (even though it was blocked)
@@ -21,10 +19,7 @@ export async function GET() {
       // Return cached data if available
       const cachedData = await readCache<PinnedRepo[]>(PINNED_REPOS_CACHE_KEY)
       if (cachedData) {
-        console.log(
-          '[GET] /api/github/pinned-repos - rate limit fail returning cachedData',
-          cachedData,
-        )
+        logger.info(`Ratelimit exceeded, returning cached data`)
         return NextResponse.json(cachedData, {
           headers: {
             'X-Rate-Limited': 'true',
@@ -38,11 +33,7 @@ export async function GET() {
           },
         })
       }
-      console.log(
-        '[GET] /api/github/pinned-repos - rate limit fail and cachedData is empty',
-        rateLimitCheck,
-        cachedData,
-      )
+      logger.info(`Ratelimit exceeded, no cached data - returning 429`)
 
       // No cached data available - return error
       return NextResponse.json(
@@ -117,6 +108,7 @@ export async function GET() {
     if (!response.ok) {
       throw new Error(`GitHub API error: ${response.status}`)
     }
+    logger.info(`Ratelimit not exceeded, fetched update from GitHub`)
 
     const result = (await response.json()) as GraphQLResponse<GitHubUser>
 
